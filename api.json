@@ -1,0 +1,26 @@
+{
+  "Comment": "Assistente de Delivery",
+  "StartAt": "ReceberPedido",
+  "States": {
+    "ReceberPedido": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ReceberPedidoFunction",
+      "Next": "ValidarPedido"
+    },
+    "ValidarPedido": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ValidarPedidoFunction",
+      "Next": "AtualizarStatus"
+    },
+    "AtualizarStatus": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:AtualizarStatusFunction",
+      "Next": "NotificarCliente"
+    },
+    "NotificarCliente": {
+      "Type": "Task",
+      "Resource": "arn:aws:sns:REGION:ACCOUNT_ID:DeliveryNotification",
+      "End": true
+    }
+  }
+}
